@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile</title>
+<style>
+body{
+    background:linear-gradient(120deg,#ff9a9e,#fad0c4);
+    display:flex;justify-content:center;align-items:center;
+    height:100vh;font-family:Arial;
+}
+.box{
+    background:white;padding:25px;border-radius:10px;width:350px;
+}
+input,select,button{width:100%;padding:8px;margin:6px 0;}
+button{background:#ff758c;color:white;border:none;}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>Create Profile</h2>
+<form method="POST" enctype="multipart/form-data">
+<input name="name" placeholder="Name" required>
+<input name="mobile" placeholder="Mobile No" required>
+<input type="email" name="email" placeholder="Email" required>
+<input name="weight" placeholder="Weight (kg)" required>
+<select name="gender" required>
+<option value="">Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+<input type="file" name="photo" required>
+<button>Save Profile</button>
+</form>
+</div>
+</body>
+</html>

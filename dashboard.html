@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+
+<style>
+body{
+    background:linear-gradient(120deg,#667eea,#764ba2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial, sans-serif;
+}
+
+/* Profile photo corner */
+.profile-corner{
+    position:fixed;
+    top:20px;
+    left:20px;
+    z-index:1000;
+}
+.profile-corner img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    border:3px solid white;
+    object-fit:cover;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.box{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    width:360px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+h2{
+    text-align:center;
+}
+input,button{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+}
+.open-btn{
+    background:#667eea;
+    color:white;
+    border:none;
+    font-size:16px;
+    cursor:pointer;
+}
+.profile-btn{
+    background:#28a745;
+    color:white;
+    border:none;
+}
+.delete-btn{
+    background:#dc3545;
+    color:white;
+    border:none;
+}
+button:hover{
+    opacity:0.9;
+}
+a{
+    display:block;
+    text-align:center;
+    margin-top:12px;
+    color:#667eea;
+    text-decoration:none;
+    font-weight:bold;
+}
+a:hover{
+    text-decoration:underline;
+}
+</style>
+
+<script>
+window.onload = function () {
+    const savedIP = localStorage.getItem("esp_ip");
+    if (savedIP) {
+        document.getElementById("esp_ip").value = savedIP;
+    }
+};
+function saveIP() {
+    localStorage.setItem("esp_ip", document.getElementById("esp_ip").value);
+}
+</script>
+</head>
+
+<body>
+
+<!-- PROFILE PHOTO (TOP LEFT CORNER) -->
+<a href="{{ url_for('profile2') }}" class="profile-corner">
+    <img src="{{ user_photo if user_photo else '/static/default.jpg' }}" alt="Profile">
+</a>
+
+<div class="box">
+    <h2>Welcome, {{ user }}</h2>
+
+    <!-- ESP32 Reminder -->
+    <form method="POST" action="{{ url_for('dashboard') }}" onsubmit="saveIP()">
+        <input type="text"
+               id="esp_ip"
+               name="esp_ip"
+               placeholder="ESP32 IP Address (192.168.4.1)"
+               required>
+        <button type="submit" class="open-btn">Open Reminder</button>
+    </form>
+
+    <hr>
+
+    <!-- Delete Account -->
+    <form method="POST"
+          action="{{ url_for('delete_account') }}"
+          onsubmit="return confirm('Are you sure? This will permanently delete your account!');">
+        <button type="submit" class="delete-btn">Delete Account</button>
+    </form>
+
+    <a href="{{ url_for('index') }}">Logout</a>
+</div>
+
+</body>
+</html>
